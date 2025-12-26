@@ -5,9 +5,10 @@ import react from '@vitejs/plugin-react'
 // For GitHub Pages: if your repo is username.github.io, use base: '/'
 // Otherwise, use base: '/your-repo-name/'
 // Update the base path below to match your GitHub repository name
-export default defineConfig({
-  plugins: [react()],
-  base: process.env.NODE_ENV === 'production' 
-    ? (process.env.VITE_BASE_PATH || '/comunity-portfolio/') 
-    : '/',
+export default defineConfig(({ command, mode }) => {
+  const isProduction = command === 'build' || mode === 'production'
+  return {
+    plugins: [react()],
+    base: isProduction ? '/comunity-portfolio/' : '/',
+  }
 })
